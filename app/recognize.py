@@ -185,13 +185,57 @@ def _parse_candidate(raw: str):
     if mol is None:
         return None
 
+    # Drop single-atom rare-metal fragments: labels like "3a" are often read
+    # as [Ga]/[Pb]/[Sn] and end up as a stray fragment in the SMILES.
+    try:
+        frags = Chem.GetMolFrags(mol, asMols=True, sanitizeFrags=False)
+        if len(frags) > 1:
+            rare = {"Ga", "Pb", "Sn", "Bi", "Hg", "Cd", "Tl", "U", "Ge", "Sb"}
+            keep = [f for f in frags
+                    if not (f.GetNumAtoms() == 1
+                            and f.GetAtomWithIdx(0).GetSymbol() in rare)]
+            if keep and len(keep) < len(frags):
+                mol = keep[0]
+                for f in keep[1:]:
+                    mol = Chem.CombineMols(mol, f)
+    except Exception:
+        pass
+
+    # Carbon radicals in a recognition result are almost always a misread
+    # label ("Ac"/"OMe" -> [CH2]/[CH]); close the shell by restoring implicit H.
+    try:
+        if any(a.GetAtomicNum() == 6 and a.GetNumRadicalElectrons()
+               for a in mol.GetAtoms()):
+            for atom in mol.GetAtoms():
+                if atom.GetAtomicNum() == 6 and atom.GetNumRadicalElectrons():
+                    atom.SetNumRadicalElectrons(0)
+                    atom.SetNoImplicit(False)
+            Chem.SanitizeMol(mol)
+    except Exception:
+        pass
+
     # Deuterium / tritium labels are read as ²H/³H. Users draw "D" to mean a
     # hydrogen position, so fold hydrogen isotopes back to plain H.
-    if any(a.GetAtomicNum() == 1 and a.GetIsotope() for a in mol.GetAtoms()):
+    # Exception: when a [2H] also sits on N/O/S, the "Me" label was misread as
+    # deuterium; converting it to H would silently delete a methyl. In that
+    # case carbon-bound [2H] with >=2 heavy neighbours becomes a methyl.
+    hs = [a for a in mol.GetAtoms() if a.GetAtomicNum() == 1 and a.GetIsotope()]
+    if hs:
+        hetero_h = any(
+            h.GetNeighbors()[0].GetAtomicNum() in (7, 8, 16)
+            for h in hs if h.GetNeighbors()
+        )
         try:
-            for atom in mol.GetAtoms():
-                if atom.GetAtomicNum() == 1:
-                    atom.SetIsotope(0)
+            for h in hs:
+                nbr = h.GetNeighbors()[0]
+                if hetero_h and nbr.GetAtomicNum() == 6 and sum(
+                        1 for n in nbr.GetNeighbors() if n.GetAtomicNum() > 1) >= 2:
+                    h.SetAtomicNum(6)
+                    h.SetIsotope(0)
+                    h.SetNoImplicit(True)
+                    h.SetNumExplicitHs(3)
+                else:
+                    h.SetIsotope(0)
             mol = Chem.RemoveHs(mol)
             Chem.SanitizeMol(mol)
         except Exception:
