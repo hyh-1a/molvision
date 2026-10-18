@@ -1,0 +1,902 @@
+[
+  {
+    "name": "1",
+    "expected": "CC1=CC(=O)C=CC1=O",
+    "got": [
+      "CC1=CC(=O)C=CC1=O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "2",
+    "expected": "S(SC1=NC2=CC=CC=C2S1)C3=NC4=C(S3)C=CC=C4",
+    "got": [
+      "c1ccc2sc(SSc3nc4ccccc4s3)nc2c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "3",
+    "expected": "OC1=C(Cl)C=C(C=C1[N+]([O-])=O)[N+]([O-])=O",
+    "got": [
+      "O=[N+]([O-])c1cc(Cl)c(O)c([N+](=O)[O-])c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "4",
+    "expected": "[O-][N+](=O)C1=CNC(=N)S1",
+    "got": [
+      "N=c1[nH]cc([N+](=O)[O-])s1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "5",
+    "expected": "NC1=CC2=C(C=C1)C(=O)C3=C(C=CC=C3)C2=O",
+    "got": [
+      "Nc1ccc2c(c1)C(=O)c1ccccc1C2=O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "6",
+    "expected": "OC(=O)C1=C(C=CC=C1)C2=C3C=CC(=O)C(=C3OC4=C2C=CC(=C4Br)O)Br",
+    "got": [
+      "O=C(O)c1ccccc1-c1c2ccc(=O)c(Br)c-2oc2c(Br)c(O)ccc12"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "7",
+    "expected": "CN(C)C1=C(Cl)C(=O)C2=C(C=CC=C2)C1=O",
+    "got": [
+      "CN(C)C1=C(Cl)C(=O)c2ccccc2C1=O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "8",
+    "expected": "CC1=C(C2=C(C=C1)C(=O)C3=CC=CC=C3C2=O)[N+]([O-])=O",
+    "got": [
+      "Cc1ccc2c(c1[N+](=O)[O-])C(=O)c1ccccc1C2=O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "9",
+    "expected": "CC(=NO)C(C)=NO",
+    "got": [
+      "CC(=N/O)/C(C)=N\\O"
+    ],
+    "exact": false,
+    "count": 1
+  },
+  {
+    "name": "10",
+    "expected": "C1=CC=C(C=C1)P(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "c1ccc(P(c2ccccc2)c2ccccc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "11",
+    "expected": "CC(C)(C)C1=C(O)C=C(C(=C1)O)C(C)(C)C",
+    "got": [
+      "CC(C)(C)c1cc(O)c(C(C)(C)C)cc1O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "12",
+    "expected": "CC1=NN(C(=O)C1)C2=CC=CC=C2",
+    "got": [
+      "CC1=NN(c2ccccc2)C(=O)C1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "13",
+    "expected": "NC1=CC=NC2=C1C=CC(=C2)Cl",
+    "got": [
+      "Nc1ccnc2cc(Cl)ccc12"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "14",
+    "expected": "CCCCCC[CH]1CCCCN1",
+    "got": [
+      "CCCCCCC1CCCCN1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "15",
+    "expected": "O=CC1=C2C=CC=CC2=CC3=C1C=CC=C3",
+    "got": [
+      "O=Cc1c2ccccc2cc2ccccc12"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "16",
+    "expected": "BrN1C(=O)CCC1=O",
+    "got": [
+      "O=C1CCC(=O)N1Br"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "17",
+    "expected": "CCCCCCCCCCCCCCCC1=C(N)C=CC(=C1)O",
+    "got": [
+      "CCCCCCCCCCCCCCCc1cc(O)ccc1N"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "18",
+    "expected": "C(COC1=C(C=CC=C1)C2=CC=CC=C2)OC3=CC=CC=C3C4=CC=CC=C4",
+    "got": [
+      "c1ccc(-c2ccccc2OCCOc2ccccc2-c2ccccc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "20",
+    "expected": "CC(=O)NC1=NC2=C(C=C1)C(=CC=N2)O",
+    "got": [
+      "CC(=O)Nc1ccc2c(O)ccnc2n1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "21",
+    "expected": "CC1=C2C=CC(=NC2=NC(=C1)O)N",
+    "got": [
+      "Cc1cc(O)nc2nc(N)ccc12"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "22",
+    "expected": "CCOC(=O)C1=CN=C2N=C(N)C=CC2=C1O",
+    "got": [
+      "CCOC(=O)c1cnc2nc(N)ccc2c1O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "23",
+    "expected": "CC1=CC(=NC=C1)N=CC2=CC=CC=C2",
+    "got": [
+      "Cc1ccnc(N=Cc2ccccc2)c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "24",
+    "expected": "C[N+](C)(C)CC1=CC=CC=C1",
+    "got": [
+      "C[N+](C)(C)Cc1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "25",
+    "expected": "C[N+](C)(C)C(=O)C1=CC=CC=C1",
+    "got": [
+      "C[N+](C)(C)C(=O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "26",
+    "expected": "ICCC(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "ICCC(c1ccccc1)(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "27",
+    "expected": "CC1=CC(=C(C[N+](C)(C)C)C(=C1)C)C",
+    "got": [
+      "Cc1cc(C)c(C[N+](C)(C)C)c(C)c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "28",
+    "expected": "C[C](O)(CC(O)=O)C1=CC=C(C=C1)[N+]([O-])=O",
+    "got": [
+      "CC(O)(CC(=O)O)c1ccc([N+](=O)[O-])cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "29",
+    "expected": "CC1=CC=C(C=C1)C(=O)C2=CC=C(Cl)C=C2",
+    "got": [
+      "Cc1ccc(C(=O)c2ccc(Cl)cc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "30",
+    "expected": "ON=CC1=CC=C(O)C=C1",
+    "got": [
+      "ON=Cc1ccc(O)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "31",
+    "expected": "CC1=CC(=C(N)C(=C1)C)C",
+    "got": [
+      "Cc1cc(C)c(N)c(C)c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "32",
+    "expected": "CC1=CC=C(C=C1)C(=O)C2=CC=C(C=C2)[N+]([O-])=O",
+    "got": [
+      "Cc1ccc(C(=O)c2ccc([N+](=O)[O-])cc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "33",
+    "expected": "CC(O)(C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CC(O)(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "34",
+    "expected": "ON=CC1=CC(=CC=C1)[N+]([O-])=O",
+    "got": [
+      "O=[N+]([O-])c1cccc(C=NO)c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "35",
+    "expected": "OC1=C2C=CC(=CC2=NC=C1[N+]([O-])=O)Cl",
+    "got": [
+      "O=[N+]([O-])c1cnc2cc(Cl)ccc2c1O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "36",
+    "expected": "CC1=CC=CC2=NC=C(C)C(=C12)Cl",
+    "got": [
+      "Cc1cnc2cccc(C)c2c1Cl"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "37",
+    "expected": "CCC(CC)([CH](OC(N)=O)C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CCC(CC)(c1ccccc1)C(OC(N)=O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "38",
+    "expected": "ON=C(CC1=CC=CC=C1)[CH](C#N)C2=CC=CC=C2",
+    "got": [
+      "N#CC(C(Cc1ccccc1)=NO)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "39",
+    "expected": "O[CH](CC1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "OC(Cc1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "40",
+    "expected": "COC1=CC=C(CC2=CC=C(OC)C=C2)C=C1",
+    "got": [
+      "COc1ccc(Cc2ccc(OC)cc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "41",
+    "expected": "CN(C)[CH](C1=CC=CC=C1)C2=C(C)C=CC=C2",
+    "got": [
+      "Cc1ccccc1C(c1ccccc1)N(C)C"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "42",
+    "expected": "COC1=CC(=C(N)C(=C1)[N+]([O-])=O)[N+]([O-])=O",
+    "got": [
+      "COc1cc([N+](=O)[O-])c(N)c([N+](=O)[O-])c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "43",
+    "expected": "NN=C(C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "NN=C(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "44",
+    "expected": "COC1=CC=C(C=C1)C=NO",
+    "got": [
+      "COc1ccc(C=NO)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "45",
+    "expected": "C1=CC=C(C=C1)C(N=C(C2=CC=CC=C2)C3=CC=CC=C3)C4=CC=CC=C4",
+    "got": [
+      "c1ccc(C(=NC(c2ccccc2)c2ccccc2)c2ccccc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "46",
+    "expected": "C1=CC=C(C=C1)N=C(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "c1ccc(N=C(c2ccccc2)c2ccccc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "47",
+    "expected": "CC1=C(C2=CC=CC=C2)C(=C3C=CC=CC3=N1)O",
+    "got": [
+      "Cc1nc2ccccc2c(O)c1-c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "49",
+    "expected": "OC(=O)[CH](CC1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "O=C(O)C(Cc1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "50",
+    "expected": "CCC1=C(N)C=C(C)N=C1",
+    "got": [
+      "CCc1cnc(C)cc1N"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "51",
+    "expected": "CC1=C(C2=CC=CC=C2)C(=C3C=CC=CC3=N1)OC4=CC=CC=C4",
+    "got": [
+      "Cc1nc2ccccc2c(Oc2ccccc2)c1-c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "52",
+    "expected": "N#C[CH](C(C1=CC=CC=C1)C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "N#CC(c1ccccc1)C(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "54",
+    "expected": "CC(=O)[CH]1CC2=C(C=CC=C2)C1=O",
+    "got": [
+      "CC(=O)C1Cc2ccccc2C1=O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "55",
+    "expected": "O=S(CC1=CC=CC=C1)CC2=CC=CC=C2",
+    "got": [
+      "O=S(Cc1ccccc1)Cc1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "56",
+    "expected": "C[CH](C1=CC=CC=C1)[C](C)(C#N)C2=CC=CC=C2",
+    "got": [
+      "CC(c1ccccc1)C(C)(C#N)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "57",
+    "expected": "CC1=C2CCCCC2=NC(=N1)O",
+    "got": [
+      "Cc1nc(O)nc2c1CCCC2"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "58",
+    "expected": "N(C(C1=CC=CC=C1)C2=CC=CC=C2)C(C3=CC=CC=C3)C4=CC=CC=C4",
+    "got": [
+      "c1ccc(C(NC(c2ccccc2)c2ccccc2)c2ccccc2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "59",
+    "expected": "OC1=C2C=CC=CC2=C(N=N1)C3=CC=CC=C3",
+    "got": [
+      "Oc1nnc(-c2ccccc2)c2ccccc12"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "60",
+    "expected": "CC(C)(C(N)=O)C1=CC=CC=C1",
+    "got": [
+      "CC(C)(C(N)=O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "61",
+    "expected": "OC(=O)C(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "O=C(O)C(c1ccccc1)(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "62",
+    "expected": "CCC[N+](CCC)(CCC)CC1=CC=CC=C1",
+    "got": [
+      "CCC[N+](CCC)(CCC)Cc1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "63",
+    "expected": "CC1=CC(=C(CC(=O)C2=CC=CC=C2)C(=C1)C)C",
+    "got": [
+      "Cc1cc(C)c(CC(=O)c2ccccc2)c(C)c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "64",
+    "expected": "COC(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "COC(c1ccccc1)(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "65",
+    "expected": "CCC(CC)(CC)[CH](OC(=O)C1=C(C=CC=C1)C(O)=O)C2=CC=CC=C2",
+    "got": [
+      "CCC(CC)(CC)C(OC(=O)c1ccccc1C(=O)O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "66",
+    "expected": "CC(=O)C(CC1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "CC(=O)C(Cc1ccccc1)(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "67",
+    "expected": "O=S(=O)(CC1=CC=CC=C1)CC2=CC=CC=C2",
+    "got": [
+      "O=S(=O)(Cc1ccccc1)Cc1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "68",
+    "expected": "CC(C)(C)OC(=O)C(C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CC(C)(C)OC(=O)C(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "69",
+    "expected": "N#CC(CC1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "N#CC(Cc1ccccc1)(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "70",
+    "expected": "CC(=CC1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CC(=Cc1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "71",
+    "expected": "N#C[CH](CC1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "N#CC(Cc1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "72",
+    "expected": "C[C](O)([CH](C(O)=O)C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CC(O)(c1ccccc1)C(C(=O)O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "73",
+    "expected": "C[CH]([CH](C(O)=O)C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CC(c1ccccc1)C(C(=O)O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "74",
+    "expected": "ON=CC1=CC=C(Cl)C=C1",
+    "got": [
+      "ON=Cc1ccc(Cl)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "75",
+    "expected": "COC(C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "COC(c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "76",
+    "expected": "O=C(NC(C1=CC=CC=C1)C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "O=C(NC(c1ccccc1)c1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "77",
+    "expected": "C[N+](C)(CC1=CC=CC=C1)CC2=CC=CC=C2",
+    "got": [
+      "C[N+](C)(Cc1ccccc1)Cc1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "79",
+    "expected": "ON=CC1=CC2=C(OCO2)C=C1",
+    "got": [
+      "ON=Cc1ccc2c(c1)OCO2"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "80",
+    "expected": "CCOC(=O)C(NC(=O)C1=CC=CC=C1)C(=O)OCC",
+    "got": [
+      "CCOC(=O)C(NC(=O)c1ccccc1)C(=O)OCC"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "81",
+    "expected": "NC1=CC=C(Cl)N=C1",
+    "got": [
+      "Nc1ccc(Cl)nc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "82",
+    "expected": "C1CCN(CC1)C(C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "c1ccc(C(c2ccccc2)N2CCCCC2)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "83",
+    "expected": "CCOC(=O)C1=C(O)C2=CC=C(Cl)C(=C2N=C1)C",
+    "got": [
+      "CCOC(=O)c1cnc2c(C)c(Cl)ccc2c1O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "84",
+    "expected": "CCN(CC)C(=O)C=CC1=CC=CC=C1",
+    "got": [
+      "CCN(CC)C(=O)C=Cc1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "85",
+    "expected": "C[N+](C)(C)CC1=CC=C(C=C1)[N+]([O-])=O",
+    "got": [
+      "C[N+](C)(C)Cc1ccc([N+](=O)[O-])cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "86",
+    "expected": "C[N+](C)(C)CC1=CC=CC(=C1)[N+]([O-])=O",
+    "got": [
+      "C[N+](C)(C)Cc1cccc([N+](=O)[O-])c1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "87",
+    "expected": "O=C(C[CH](N1CCCCC1)C2=CC=CC=C2)C3=CC=CC=C3",
+    "got": [
+      "O=C(CC(c1ccccc1)N1CCCCC1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "88",
+    "expected": "COC(N(C)C)(C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "COC(c1ccccc1)(c1ccccc1)N(C)C"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "89",
+    "expected": "CN(C)CCC(=O)C1=CC=CC=C1",
+    "got": [
+      "CN(C)CCC(=O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "90",
+    "expected": "CCCCN(CCCC)C(C)=O",
+    "got": [
+      "CCCCN(CCCC)C(C)=O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "91",
+    "expected": "CC1=C(CO)C=CC=C1",
+    "got": [
+      "Cc1ccccc1CO"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "92",
+    "expected": "CCN(CC)CCC(=O)OC",
+    "got": [
+      "CCN(CC)CCC(=O)OC"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "93",
+    "expected": "Cl[CH](CC1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "ClC(Cc1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "94",
+    "expected": "CC(C)CC(=O)CC(C)=O",
+    "got": [
+      "CC(=O)CC(=O)CC(C)C"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "95",
+    "expected": "CCN(CC)CCC#N",
+    "got": [
+      "CCN(CC)CCC#N"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "96",
+    "expected": "COC1=CC=C(CC#N)C=C1",
+    "got": [
+      "COc1ccc(CC#N)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "97",
+    "expected": "CN(CC1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CN(Cc1ccccc1)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "98",
+    "expected": "COC1=CC=C(C=C1)C(C)(C)C#N",
+    "got": [
+      "COc1ccc(C(C)(C)C#N)cc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "99",
+    "expected": "CCC(CC)([CH](O)C1=CC=CC=C1)C2=CC=CC=C2",
+    "got": [
+      "CCC(CC)(c1ccccc1)C(O)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "100",
+    "expected": "CC(OC(=O)C1=CC=CC=C1)=CC2=CC=CC=C2",
+    "got": [
+      "C/C(=C\\c1ccccc1)OC(=O)c1ccccc1"
+    ],
+    "exact": false,
+    "count": 1
+  },
+  {
+    "name": "101",
+    "expected": "CCN(CC)C(C)=O",
+    "got": [
+      "CCN(CC)C(C)=O"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "102",
+    "expected": "CCCCO[CH](N1CCCCC1)C2=CC=CC=C2",
+    "got": [
+      "CCCCOC(c1ccccc1)N1CCCCC1"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "103",
+    "expected": "CCCCCCCCN(CC)CC",
+    "got": [
+      "CCCCCCCCN(CC)CC"
+    ],
+    "exact": true,
+    "count": 1
+  },
+  {
+    "name": "104",
+    "expected": "CCO[CH](C)C1=CC=CC=C1",
+    "got": [
+      "CCOC(C)c1ccccc1"
+    ],
+    "exact": true,
+    "count": 1
+  }
+]
