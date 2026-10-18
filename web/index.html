@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MolVision · 结构式识别工作台</title>
+<script src="/static/vendor/3Dmol-min.js"></script>
+<style>
+  :root{
+    --paper:#f5f1e8;
+    --paper-2:#fbf8f1;
+    --ink:#15181a;
+    --ink-2:#3c3933;
+    --muted:#7b7364;
+    --faint:#a79e8c;
+    --line:#d6cdb9;
+    --line-2:#e7dfcd;
+    --accent:#1d3f66;
+    --accent-2:#b0572f;
+    --ok:#2e6247;
+    --err:#a0362a;
+    --serif:"Iowan Old Style","Palatino Linotype","Book Antiqua",Georgia,"Songti SC","STSong",serif;
+    --sans:"Helvetica Neue","Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  html{-webkit-font-smoothing:antialiased}
+  body{
+    margin:0;color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6;
+    background-color:var(--paper);
+    background-image:radial-gradient(rgba(21,24,26,.045) 0.7px,transparent 0.7px);
+    background-size:22px 22px;
+  }
+  ::selection{background:#1d3f6622}
+
+  /* ---------- masthead ---------- */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:26px 48px;border-bottom:1px solid var(--line);
+    max-width:1320px;margin:0 auto;
+  }
+  .brand{
+    font-family:var(--serif);font-size:15px;letter-spacing:.32em;text-transform:uppercase;
+  }
+  .brand::before{
+    content:"";display:inline-block;width:7px;height:7px;margin-right:12px;
+    background:var(--accent-2);transform:rotate(45deg) translateY(-1px);
+  }
+  .masthead-meta{
+    font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);
+  }
+  @media(max-width:760px){
+    .masthead{padding:18px 22px}
+    .masthead-meta{display:none}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{max-width:1320px;margin:0 auto;padding:48px 48px 34px}
+  .kicker{
+    font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-2);
+    margin:0 0 26px;display:flex;align-items:center;gap:14px;
+  }
+  .kicker::after{content:"";flex:1;height:1px;background:var(--line);max-width:120px}
+  .hero h1{
+    font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.6vw,72px);
+    line-height:1.02;letter-spacing:-.02em;margin:0 0 26px;max-width:16ch;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero .lede{
+    max-width:56ch;color:var(--ink-2);font-size:15.5px;line-height:1.85;margin:0;
+    padding-left:18px;border-left:2px solid var(--line);
+  }
+  @media(max-width:760px){.hero{padding:40px 22px 28px}}
+  /* denser layout on laptop / projector heights so the table stays in view */
+  @media(min-width:1081px) and (max-height:950px){
+    .masthead{padding:18px 48px}
+    .hero{padding:30px 48px 22px}
+    .hero .kicker{margin-bottom:16px}
+    .hero h1{font-size:clamp(34px,4.4vw,56px);margin-bottom:18px}
+    .hero .lede{font-size:14px;line-height:1.75}
+    .frame{height:300px}
+  }
+
+  /* ---------- workbench ---------- */
+  .workbench{
+    max-width:1320px;margin:0 auto;padding:0 48px 30px;
+    display:grid;grid-template-columns:400px minmax(0,1fr);gap:44px;align-items:start;
+  }
+  @media(max-width:1080px){.workbench{grid-template-columns:1fr;gap:34px;padding:0 22px 24px}}
+
+  .panel-head{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;
+              padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .panel-head .idx{
+    font-family:var(--serif);font-size:12px;color:var(--accent-2);letter-spacing:.1em;
+  }
+  .panel-head h2{
+    font-family:var(--serif);font-size:19px;font-weight:400;margin:0;letter-spacing:.01em;
+  }
+  .panel-head .tag{
+    margin-left:auto;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+  }
+
+  @media(max-width:1200px){.panel-head .tag{display:none}}
+
+  /* ---------- input ---------- */
+  .dropzone{
+    border:1px dashed var(--line);background:var(--paper-2);
+    padding:34px 18px;text-align:center;cursor:pointer;transition:border-color .18s,background .18s;
+    color:var(--muted);font-size:13px;line-height:1.9;
+  }
+  .dropzone strong{display:block;font-family:var(--serif);font-size:16px;font-weight:400;
+                   color:var(--ink);margin-bottom:4px}
+  .dropzone:hover,.dropzone.over{border-color:var(--accent);background:#eef1f4;color:var(--ink-2)}
+  #preview{max-width:100%;max-height:210px;margin-top:14px;display:none;cursor:zoom-in;
+           border:1px solid var(--line-2);background:#fff}
+
+  .or{
+    display:flex;align-items:center;gap:14px;margin:22px 0 14px;
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);
+  }
+  .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line-2)}
+
+  textarea{
+    width:100%;height:86px;resize:vertical;background:#fff;color:var(--ink);
+    border:1px solid var(--line);padding:11px 13px;font-family:var(--mono);
+    font-size:12.5px;line-height:1.6;outline:none;transition:border-color .18s;
+  }
+  textarea:focus{border-color:var(--accent)}
+  textarea::placeholder{color:#b3aa99}
+
+  .actions{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+  button{font-family:var(--sans);cursor:pointer;transition:all .18s}
+  .btn{
+    background:var(--ink);color:var(--paper-2);border:1px solid var(--ink);
+    padding:10px 20px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  }
+  .btn:hover{background:var(--accent);border-color:var(--accent)}
+  .btn-ghost{
+    background:transparent;color:var(--ink-2);border:1px solid var(--line);
+    padding:10px 18px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  }
+  .btn-ghost:hover{border-color:var(--ink);color:var(--ink)}
+
+  .options{display:flex;align-items:center;gap:8px;margin-top:16px}
+  .options label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .options select{
+    background:#fff;border:1px solid var(--line);color:var(--ink);
+    font-family:var(--mono);font-size:12px;padding:4px 8px;outline:none;
+  }
+  .options select:focus{border-color:var(--accent)}
+  .opt-hint{font-size:10px;color:var(--faint)}
+
+  .samples{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:22px;           padding-top:16px;border-top:1px solid var(--line-2)}
+  .samples::before{content:"Examples";flex-basis:100%;font-size:10px;letter-spacing:.2em;
+                   text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+  .samples button{
+    background:none;border:0;padding:2px 0;color:var(--ink-2);font-size:12.5px;
+    border-bottom:1px solid transparent;
+  }
+  .samples button:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+  .status{margin-top:18px;font-size:12px;color:var(--muted);min-height:20px;
+          font-style:italic;line-height:1.65;word-break:break-word}
+  .status.err{color:var(--err);font-style:normal}
+  .status.ok{color:var(--ok)}
+  #progress{display:none;height:2px;background:var(--line-2);margin-top:10px;overflow:hidden}
+  #progress.on{display:block}
+  #progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s ease}
+  .footnote{margin-top:14px;font-size:11px;color:var(--faint);line-height:1.8}
+
+  /* ---------- multi-structure selector ---------- */
+  .multi{margin-bottom:24px;border:1px solid var(--line);background:var(--paper-2);padding:12px 14px}
+  .multi-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
+  .multi-head .label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .multi-head .label b{color:var(--accent-2);font-weight:400;font-family:var(--serif);letter-spacing:0}
+  .multi-actions{display:flex;gap:14px}
+  .multi-list{display:flex;gap:10px;flex-wrap:wrap;padding-bottom:4px}
+  .multi-item{
+    flex:0 0 auto;width:122px;border:1px solid var(--line);background:#fff;
+    padding:6px;cursor:pointer;transition:border-color .15s,box-shadow .15s;
+  }
+  .multi-item:hover{border-color:var(--faint)}
+  .multi-item.sel{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  .multi-item img{width:100%;height:82px;object-fit:contain;background:#fff;display:block}
+  .multi-item .idx{font-size:9px;letter-spacing:.14em;color:var(--accent-2);margin-top:5px}
+  .multi-item .src{font-size:9px;color:var(--faint);white-space:nowrap;overflow:hidden;
+                   text-overflow:ellipsis;margin-top:1px}
+  .multi-item .sm{
+    font-family:var(--mono);font-size:9px;color:var(--muted);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .multi-item.bad{opacity:.55}
+
+  /* ---------- figures ---------- */
+  .figures{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  @media(max-width:1250px){.figures{grid-template-columns:1fr}}
+  figure{margin:0}
+  .frame{
+    background:var(--paper-2);border:1px solid var(--line);padding:10px;
+    display:flex;align-items:center;justify-content:center;height:344px;
+    position:relative;overflow:hidden;
+  }
+  .frame::after{
+    content:"";position:absolute;inset:6px;border:1px solid rgba(21,24,26,.04);pointer-events:none;
+  }
+  .frame img{max-width:100%;max-height:100%;display:block;mix-blend-mode:multiply}
+  .frame .ph{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--faint);pointer-events:none;
+  }
+  #viewer3d{width:100%;height:100%;position:relative}
+  figcaption{
+    margin-top:10px;font-size:11.5px;color:var(--ink-2);display:flex;gap:8px;align-items:baseline;
+  }
+  figcaption b{font-family:var(--serif);font-weight:400;color:var(--accent-2);letter-spacing:.02em;margin-right:2px}
+  figcaption span{margin-left:auto;color:var(--faint);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+
+  /* ---------- smiles row ---------- */
+  .smiles-row{
+    margin-top:26px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .smiles-row .label{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+  .smiles-row code{
+    flex:1;min-width:220px;font-family:var(--mono);font-size:12.5px;color:var(--accent);
+    word-break:break-all;
+  }
+  .link-btn{
+    background:none;border:0;padding:0;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-2);border-bottom:1px solid var(--line);
+  }
+  .link-btn:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+  /* ---------- structural alerts ---------- */
+  .alerts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .alert{
+    font-size:11px;line-height:1.5;padding:4px 10px;border:1px solid var(--line);
+    background:var(--paper-2);color:var(--ink-2);
+  }
+  .alert.warn{border-color:#d9b48b;background:#fbf2e4;color:#7a4a1e}
+
+  /* ---------- descriptors ---------- */
+  .table-title{
+    margin:30px 0 4px;display:flex;align-items:baseline;gap:12px;
+  }
+  .table-title h3{
+    font-family:var(--serif);font-weight:400;font-size:16px;margin:0;
+  }
+  .table-title span{margin-left:auto;font-size:10px;letter-spacing:.16em;
+                    text-transform:uppercase;color:var(--faint)}
+  .descriptors{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
+    border-top:1px solid var(--line-2);
+  }
+  .prop{padding:13px 12px 14px;border-bottom:1px solid var(--line-2)}
+  .prop .k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .prop .v{font-family:var(--serif);font-size:20px;margin-top:3px;color:var(--ink);
+           font-variant-numeric:tabular-nums;line-height:1.25}
+  .prop .v.small{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
+
+  /* ---------- footer ---------- */
+  footer{
+    max-width:1320px;margin:40px auto 0;padding:22px 48px 46px;
+    border-top:1px solid var(--line);display:flex;gap:30px;justify-content:space-between;
+    font-size:11.5px;color:var(--faint);line-height:1.8;
+  }
+  footer .methods{max-width:70ch}
+  footer b{color:var(--ink-2);font-weight:500}
+  @media(max-width:760px){footer{padding:18px 22px 36px;flex-direction:column;gap:10px}}
+
+  /* ---------- crop modal ---------- */
+  #crop-modal{position:fixed;inset:0;background:rgba(21,24,26,.78);display:none;
+              align-items:center;justify-content:center;z-index:70;padding:20px}
+  #crop-modal.on{display:flex}
+  .crop-shell{background:var(--paper-2);border:1px solid var(--line);display:flex;
+              flex-direction:column;max-width:94vw;max-height:94vh}
+  .crop-stage{position:relative;overflow:auto;background:#fff;line-height:0}
+  .crop-stage img{display:block;max-width:92vw;max-height:calc(94vh - 62px);
+                  user-select:none;-webkit-user-drag:none;cursor:crosshair}
+  #crop-box{position:absolute;border:1.5px solid var(--accent-2);
+            background:rgba(176,87,47,.14);display:none;pointer-events:none}
+  .crop-bar{display:flex;align-items:center;gap:12px;padding:11px 14px;
+            border-top:1px solid var(--line)}
+  .crop-hint{margin-right:auto;font-size:10px;letter-spacing:.16em;
+             text-transform:uppercase;color:var(--faint)}
+
+  /* ---------- overlay ---------- */
+  #overlay{
+    position:fixed;inset:0;background:rgba(245,241,232,.78);display:none;
+    align-items:center;justify-content:center;z-index:60;backdrop-filter:blur(1.5px);
+  }
+  #overlay.on{display:flex}
+  .loader{text-align:center;color:var(--ink-2);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .spinner{
+    width:34px;height:34px;border:2px solid var(--line);border-top-color:var(--accent);
+    border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 14px;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .fade{animation:fade .45s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brand">Molvision</div>
+  <div class="masthead-meta">Structure Intelligence · RDKit Pipeline</div>
+</header>
+
+<section class="hero">
+  <p class="kicker">Cheminformatics Workbench</p>
+  <h1>From a drawing<br/><em>to a molecule.</em></h1>
+  <p class="lede">
+    上传论文、专利或教材里的结构式图片，识别为 SMILES；随后重绘二维结构、生成三维构象，
+    并计算一组可复现的分子描述符。
+  </p>
+</section>
+
+<main class="workbench">
+  <section>
+    <div class="panel-head">
+      <span class="idx">01</span><h2>Input</h2><span class="tag">Structure image / SMILES</span>
+    </div>
+
+    <div id="drop" class="dropzone">
+      <strong>拖入或点击上传</strong>
+      结构式截图 · PNG / JPG / 手绘
+    </div>
+    <input type="file" id="file" accept="image/*" multiple hidden />
+    <img id="preview" alt="预览" />
+
+    <div class="or">or</div>
+
+    <textarea id="smiles" placeholder="CC(=O)Oc1ccccc1C(=O)O"></textarea>
+    <div class="actions">
+      <button class="btn" id="go">Analyse</button>
+      <button class="btn-ghost" id="crop" style="display:none">Crop</button>
+      <button class="btn-ghost" id="clear">Clear</button>
+    </div>
+
+    <div class="options">
+      <label for="nconf">3D conformers</label>
+      <select id="nconf">
+        <option value="1">1</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+      </select>
+      <span class="opt-hint">&gt;1 生成构象集合</span>
+    </div>
+
+    <div class="samples" id="samples"></div>
+    <div id="status" class="status"></div>
+    <div id="progress"><i></i></div>
+    <p class="footnote">识别由 DECIMER 完成；手绘或低清图可能失败，可直接输入 SMILES 继续。</p>
+  </section>
+
+  <section>
+    <div class="panel-head">
+      <span class="idx">02</span><h2>Result</h2><span class="tag">Depiction · Conformer · Descriptors</span>
+    </div>
+
+    <div id="multi" class="multi" style="display:none">
+      <div class="multi-head">
+        <span class="label">Detected structures <b id="multi-count"></b></span>
+        <div class="multi-actions">
+          <button class="link-btn" id="add-manual">+ Manual</button>
+          <button class="link-btn" id="export-sdf">All → SDF</button>
+          <button class="link-btn" id="export-csv">All → CSV</button>
+        </div>
+      </div>
+      <div id="multi-list" class="multi-list"></div>
+    </div>
+
+    <div class="figures">
+      <figure>
+        <div class="frame"><img id="img2d" alt="" style="display:none" /><span class="ph">Awaiting structure</span></div>
+        <figcaption><b>Fig. 1</b> 2D structure <span>RDKit depiction</span></figcaption>
+      </figure>
+      <figure>
+        <div class="frame"><div id="viewer3d"></div><span class="ph">Awaiting conformer</span><span id="noconf" class="ph" style="display:none">R-group scaffold · no 3D</span></div>
+        <figcaption><b>Fig. 2</b> 3D conformer <span>ETKDGv3 · MMFF94</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="smiles-row">
+      <span class="label">Canonical SMILES</span>
+      <code id="canon">—</code>
+      <button class="link-btn" id="copy">Copy</button>
+      <button class="link-btn" id="sdf">Download SDF</button>
+    </div>
+
+    <div id="alerts" class="alerts"></div>
+
+    <div class="table-title" style="display:none">
+      <h3>Table 1 — Molecular descriptors</h3>
+      <span>Computed by RDKit</span>
+    </div>
+    <div id="props" class="descriptors" style="display:none"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="methods">
+    <b>Methods.</b> 识别：DECIMER 2.8 图像 Transformer。结构校验与标准化、二维重绘、
+    三维构象（ETKDGv3 嵌入，MMFF94 优化）及全部描述符均由 RDKit 计算，结果确定、可复现。
+  </div>
+  <div>MolVision · Hackathon build</div>
+</footer>
+
+<div id="crop-modal">
+  <div class="crop-shell">
+    <div class="crop-stage" id="crop-stage">
+      <img id="crop-img" alt="crop source" />
+      <div id="crop-box"></div>
+    </div>
+    <div class="crop-bar">
+      <span class="crop-hint">拖拽框选一个结构</span>
+      <button class="btn" id="crop-go">Recognise</button>
+      <button class="btn-ghost" id="crop-cancel">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="overlay"><div class="loader"><div class="spinner"></div>Working</div></div>
+
+<script>
+const $ = (s) => document.querySelector(s);
+const SAMPLES = {
+  "阿司匹林": "CC(=O)Oc1ccccc1C(=O)O",
+  "咖啡因": "Cn1cnc2c1c(=O)n(C)c(=O)n2C",
+  "布洛芬": "CC(C)Cc1ccc(cc1)C(C)C(=O)O",
+  "丙氨酸": "C[C@@H](N)C(=O)O",
+  "苯": "c1ccccc1",
+  "葡萄糖": "OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O",
+};
+
+const ELEM_COLORS = {
+  C: "#3a3a3a", H: "#c6c1b6", O: "#b23a2e", N: "#2c4f7c", S: "#a8862c",
+  P: "#b3612a", F: "#3a7d44", Cl: "#3a7d44", Br: "#7a3d6b", I: "#6b3d7a",
+};
+
+let viewer = null;
+let lastMolblock = "";
+let entries = [];
+let analysisCache = new Map();
+let selectedKey = null;
+let seq = 0;
+let lastImageDataUrl = null;
+let lastAnalysis = null;
+
+function getViewer() {
+  if (!viewer) {
+    viewer = $3Dmol.createViewer($("#viewer3d"), { backgroundColor: "#fbf8f1", antialias: true });
+  }
+  return viewer;
+}
+function render3D(molblock) {
+  const v = getViewer();
+  v.clear();
+  v.addModel(molblock, "sdf");
+  for (const [el, color] of Object.entries(ELEM_COLORS)) {
+    v.setStyle({ elem: el }, { stick: { radius: 0.13, color } });
+  }
+  for (const el of ["O", "N", "S", "P", "F", "Cl", "Br", "I"]) {
+    v.setStyle({ elem: el }, {
+      stick: { radius: 0.15, color: ELEM_COLORS[el] },
+      sphere: { scale: 0.27, color: ELEM_COLORS[el] },
+    });
+  }
+  v.zoomTo();
+  v.render();
+}
+window.addEventListener("resize", () => { if (viewer) viewer.resize(); });
+
+function status(msg, cls) {
+  const el = $("#status");
+  el.textContent = msg;
+  el.className = "status" + (cls ? " " + cls : "");
+}
+function loading(on) { $("#overlay").classList.toggle("on", on); }
+
+function propCell(k, v, small) {
+  return `<div class="prop"><div class="k">${k}</div><div class="v${small ? " small" : ""}">${v}</div></div>`;
+}
+
+function render(r) {
+  const p = r.properties;
+  const img = $("#img2d");
+  img.src = "data:image/png;base64," + r.png_2d_b64;
+  img.style.display = "block";
+
+  lastMolblock = r.molblock || "";
+  lastAnalysis = r;
+  if (r.conformer) {
+    render3D(lastMolblock);
+    $("#noconf").style.display = "none";
+  } else if (r.conformer_skipped) {
+    if (viewer) { viewer.clear(); viewer.render(); }
+    $("#noconf").style.display = "flex";
+  } else if (lastMolblock) {
+    render3D(lastMolblock);
+  }
+
+  $("#canon").textContent = p.canonical_smiles || "—";
+  document.querySelectorAll(".ph").forEach((e) => {
+    if (e.id !== "noconf") e.style.display = "none";
+  });
+
+  const items = [
+    propCell("Formula", p.formula),
+    propCell("Molecular weight", p.mw),
+    propCell("Exact mass", p.exact_mass),
+    propCell("cLogP", p.logp),
+    propCell("TPSA", p.tpsa),
+    propCell("HBD / HBA", p.hbd + " / " + p.hba),
+    propCell("Rotatable bonds", p.rotatable_bonds),
+    propCell("Rings / aromatic", p.rings + " / " + p.aromatic_rings),
+    propCell("Heavy atoms", p.heavy_atoms),
+    propCell("Formal charge", p.formal_charge),
+    propCell("Stereocentres", p.stereocenters +
+      (p.unspecified_stereocenters ? " (+" + p.unspecified_stereocenters + ")" : "")),
+  ];
+  if (r.conformer) {
+    items.push(propCell("Conformer energy", r.conformer.energy_kcal ?? "—"));
+    items.push(propCell("Optimisation", r.conformer.method));
+    items.push(propCell("Atoms (incl. H)", r.conformer.atoms));
+    if (r.conformer.n_conformers) {
+      items.push(propCell("Conformers", r.conformer.n_conformers));
+      const range = r.conformer.energy_range;
+      if (range) items.push(propCell("Energy range", range[0] + " – " + range[1], true));
+    }
+  }
+  if (p.fragments > 1) items.push(propCell("Fragments", p.fragments));
+  if (p.r_assumed) items.push(propCell("R assumed", "CH3"));
+  $("#props").innerHTML = items.join("");
+  $("#props").style.display = "grid";
+  $(".table-title").style.display = "flex";
+
+  const alerts = r.alerts || [];
+  $("#alerts").innerHTML = alerts
+    .map((a) => `<span class="alert ${a.level}">${a.text}</span>`)
+    .join("");
+}
+
+async function fetchAnalysis(smi) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 90000);
+  try {
+    const res = await fetch("/api/analyze", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ smiles: smi,
+        n_conformers: parseInt($("#nconf").value, 10) || 1 }),
+      signal: ctrl.signal,
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || "解析失败");
+    return data;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function resetEntries() {
+  entries = [];
+  analysisCache = new Map();
+  selectedKey = null;
+  $("#multi").style.display = "none";
+  $("#multi-list").innerHTML = "";
+}
+
+function addEntry(source, s) {
+  const entry = {
+    key: "e" + (seq++),
+    source,
+    ok: !!s.ok,
+    smiles: s.smiles || null,
+    thumb: s.thumb || null,
+    inchikey: s.inchikey || null,
+    stereo: !!s.stereo,
+    error: s.error || null,
+    analysis: null,
+    dupOf: null,
+  };
+  entries.push(entry);
+  return entry;
+}
+
+function markDuplicates() {
+  const seen = new Map();
+  entries.forEach((e) => {
+    if (!e.ok) return;
+    const key = e.inchikey || e.smiles;
+    if (seen.has(key)) e.dupOf = seen.get(key);
+    else seen.set(key, e.key);
+  });
+}
+
+function progress(on, ratio) {
+  const el = $("#progress");
+  if (!el) return;
+  el.classList.toggle("on", on);
+  if (on) el.firstElementChild.style.width = Math.round(ratio * 100) + "%";
+}
+
+function fileToDataURL(file) {
+  return new Promise((ok, bad) => {
+    const fr = new FileReader();
+    fr.onload = () => ok(fr.result);
+    fr.onerror = bad;
+    fr.readAsDataURL(file);
+  });
+}
+
+async function recognizeOne(file) {
+  const b64 = await fileToDataURL(file);
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 300000);
+  try {
+    const res = await fetch("/api/recognize", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image: b64 }),
+      signal: ctrl.signal,
+    });
+    const data = await res.json();
+    if (!res.ok || !data.ok) throw new Error(data.error || "识别失败");
+    return data;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function recognizeFiles(files) {
+  if (!files.length) return;
+  resetEntries();
+  showPreview(files[0]);
+  loading(true);
+  progress(true, 0);
+  try {
+    for (let i = 0; i < files.length; i++) {
+      status(`Processing ${i + 1}/${files.length} · ${files[i].name}`);
+      const data = await recognizeOne(files[i]);
+      (data.structures || []).forEach((s) => addEntry(files[i].name, s));
+      progress(true, (i + 1) / files.length);
+    }
+    if (!entries.length) throw new Error("未检测到结构式");
+    markDuplicates();
+    renderStructureList();
+    const first = entries.find((e) => e.ok) || entries[0];
+    await selectEntry(first.key);
+    const ok = entries.filter((e) => e.ok).length;
+    const unique = new Set(entries.filter((e) => e.ok).map((e) => e.inchikey || e.smiles)).size;
+    status(`${files.length} file(s) · ${entries.length} structures · ${ok} recognised · ${unique} unique`, "ok");
+  } catch (e) {
+    status("✗ " + e.message, "err");
+  } finally {
+    loading(false); progress(false);
+  }
+}
+
+function renderStructureList() {
+  const wrap = $("#multi");
+  if (entries.length <= 1) { wrap.style.display = "none"; return; }
+  wrap.style.display = "block";
+  const ok = entries.filter((e) => e.ok).length;
+  const unique = new Set(entries.filter((e) => e.ok).map((e) => e.inchikey || e.smiles)).size;
+  $("#multi-count").textContent = `${entries.length} · ${ok} ok · ${unique} unique`;
+
+  const list = $("#multi-list");
+  list.innerHTML = "";
+  entries.forEach((e, i) => {
+    const el = document.createElement("div");
+    el.className = "multi-item" + (e.ok ? "" : " bad") + (e.key === selectedKey ? " sel" : "");
+    el.innerHTML = `<img src="${e.thumb || ""}" alt="structure ${i + 1}" />
+      <div class="idx">No. ${i + 1}${e.dupOf ? " · dup" : ""}${e.stereo ? " · stereo" : ""}</div>
+      <div class="src">${e.source}</div>
+      <div class="sm">${e.ok ? e.smiles : (e.error || "failed")}</div>`;
+    el.onclick = () => selectEntry(e.key);
+    el.tabIndex = 0;
+    el.setAttribute("role", "button");
+    el.onkeydown = (ev) => {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); selectEntry(e.key); }
+    };
+    list.appendChild(el);
+  });
+}
+
+async function analyzeEntry(entry) {
+  loading(true); status("Parsing and embedding conformer…");
+  try {
+    const data = await fetchAnalysis(entry.smiles);
+    entry.analysis = data;
+    render(data);
+    status("Resolved · " + data.properties.formula + " · " + data.properties.canonical_smiles, "ok");
+  } catch (e) {
+    status("✗ " + e.message, "err");
+  } finally { loading(false); }
+}
+
+async function selectEntry(key) {
+  selectedKey = key;
+  document.querySelectorAll(".multi-item").forEach((el, i) => {
+    el.classList.toggle("sel", entries[i] && entries[i].key === key);
+  });
+  const entry = entries.find((e) => e.key === key);
+  if (!entry) return;
+  if (!entry.ok) {
+    status("✗ " + (entry.error || "识别失败") + " — 可手动输入 SMILES 后点 “+ Manual”", "err");
+    return;
+  }
+  $("#smiles").value = entry.smiles;
+  if (entry.analysis) {
+    render(entry.analysis);
+    status("Resolved · " + entry.analysis.properties.canonical_smiles, "ok");
+    return;
+  }
+  await analyzeEntry(entry);
+}
+
+async function analyzeSmiles(smi) {
+  loading(true); status("Parsing and embedding conformer…");
+  try {
+    const data = await fetchAnalysis(smi);
+    resetEntries();
+    const entry = addEntry("manual", {
+      ok: true,
+      smiles: data.properties.canonical_smiles,
+      thumb: "data:image/png;base64," + data.png_2d_b64,
+    });
+    entry.analysis = data;
+    render(data);
+    status("Resolved · " + data.properties.formula + " · " + data.properties.canonical_smiles, "ok");
+  } catch (e) {
+    status("✗ " + e.message, "err");
+  } finally { loading(false); }
+}
+
+async function ensureAnalysis(entry) {
+  if (entry.analysis) return entry.analysis;
+  if (!entry.ok) return null;
+  const data = await fetchAnalysis(entry.smiles);
+  entry.analysis = data;
+  return data;
+}
+
+function downloadBlob(blob, name) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function conformerBlocks(a, source) {
+  const confs = (a.conformers && a.conformers.length)
+    ? a.conformers
+    : [{ molblock: a.molblock, energy_kcal: a.conformer ? a.conformer.energy_kcal : null }];
+  const undef = a.properties ? a.properties.unspecified_stereocenters : 0;
+  const parts = [];
+  confs.forEach((c) => {
+    if (!c.molblock) return;
+    let block = c.molblock.trimEnd() + `\n> <SOURCE>\n${source}\n`;
+    if (a.properties && a.properties.r_assumed) {
+      block += `> <R_ASSUMED>\n${a.properties.r_assumed} (CH3)\n`;
+    }
+    if (c.energy_kcal != null) block += `> <ENERGY_KCAL>\n${c.energy_kcal}\n`;
+    if (undef) block += `> <STEREO>\nunspecified (${undef} centre(s))\n`;
+    parts.push(block);
+  });
+  return parts.length ? parts.join("\n$$$$\n") + "\n$$$$\n" : "";
+}
+
+$("#export-sdf").onclick = async () => {
+  loading(true); status("Preparing SDF…");
+  try {
+    const parts = [];
+    for (const e of entries) {
+      if (!e.ok) continue;
+      const a = await ensureAnalysis(e);
+      if (!a) continue;
+      const sdf = conformerBlocks(a, e.source);
+      if (sdf) parts.push(sdf);
+    }
+    if (!parts.length) throw new Error("没有可导出的结构");
+    downloadBlob(new Blob([parts.join("")], { type: "chemical/x-mdl-sdfile" }),
+      "molvision.sdf");
+    status(`Exported ${parts.length} structure(s) → SDF`, "ok");
+  } catch (e) {
+    status("✗ " + e.message, "err");
+  } finally { loading(false); }
+};
+
+$("#export-csv").onclick = async () => {
+  loading(true); status("Preparing CSV…");
+  try {
+    const cols = ["index", "source", "duplicate", "smiles", "inchikey", "formula", "mw", "exact_mass", "logp",
+      "tpsa", "hbd", "hba", "rotatable_bonds", "rings", "formal_charge", "stereocenters"];
+    const rows = [cols.join(",")];
+    let idx = 0;
+    for (const e of entries) {
+      if (!e.ok) continue;
+      const a = await ensureAnalysis(e);
+      if (!a) continue;
+      idx += 1;
+      const p = a.properties;
+      const vals = [idx, e.source, e.dupOf ? "yes" : "", p.canonical_smiles, p.inchikey,
+        p.formula, p.mw, p.exact_mass, p.logp, p.tpsa, p.hbd, p.hba,
+        p.rotatable_bonds, p.rings, p.formal_charge, p.stereocenters];
+      rows.push(vals.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
+    }
+    downloadBlob(new Blob(["\ufeff" + rows.join("\n")], { type: "text/csv;charset=utf-8" }),
+      "molvision.csv");
+    status(`Exported ${rows.length - 1} structure(s) → CSV`, "ok");
+  } catch (e) {
+    status("✗ " + e.message, "err");
+  } finally { loading(false); }
+};
+
+$("#add-manual").onclick = async () => {
+  const smi = $("#smiles").value.trim();
+  if (!smi) return status("先在文本框输入 SMILES，再点 + Manual", "err");
+  loading(true); status("Adding manual structure…");
+  try {
+    const data = await fetchAnalysis(smi);
+    const entry = addEntry("manual", {
+      ok: true,
+      smiles: data.properties.canonical_smiles,
+      thumb: "data:image/png;base64," + data.png_2d_b64,
+    });
+    entry.analysis = data;
+    markDuplicates();
+    renderStructureList();
+    await selectEntry(entry.key);
+    status("Added · " + data.properties.canonical_smiles, "ok");
+  } catch (e) {
+    status("✗ " + e.message, "err");
+  } finally { loading(false); }
+};
+
+$("#go").onclick = () => {
+  const smi = $("#smiles").value.trim();
+  if (!smi) return status("先输入 SMILES，或上传一张结构式图片", "err");
+  analyzeSmiles(smi);
+};
+$("#smiles").addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) $("#go").click();
+});
+$("#clear").onclick = () => {
+  $("#smiles").value = ""; $("#preview").style.display = "none";
+  lastImageDataUrl = null;
+  $("#crop").style.display = "none";
+  cropModal.classList.remove("on");
+  $("#img2d").style.display = "none";
+  $("#props").innerHTML = ""; $("#props").style.display = "none";
+  $(".table-title").style.display = "none";
+  $("#canon").textContent = "—"; status("");
+  $("#alerts").innerHTML = "";
+  lastAnalysis = null;
+  resetEntries();
+  document.querySelectorAll(".ph").forEach((e) => { e.style.display = ""; });
+  $("#noconf").style.display = "none";
+  if (viewer) { viewer.clear(); viewer.render(); }
+};
+$("#copy").onclick = async () => {
+  try { await navigator.clipboard.writeText($("#canon").textContent); status("SMILES copied", "ok"); }
+  catch { status("复制失败", "err"); }
+};
+$("#sdf").onclick = () => {
+  if (!lastAnalysis) return status("还没有可导出的结构", "err");
+  const sdf = conformerBlocks(lastAnalysis, "current");
+  if (!sdf) return status("还没有可导出的结构", "err");
+  downloadBlob(new Blob([sdf], { type: "chemical/x-mdl-sdfile" }), "molecule.sdf");
+};
+
+const drop = $("#drop"), fileInput = $("#file");
+drop.onclick = () => fileInput.click();
+drop.ondragover = (e) => { e.preventDefault(); drop.classList.add("over"); };
+drop.ondragleave = () => drop.classList.remove("over");
+drop.ondrop = (e) => {
+  e.preventDefault(); drop.classList.remove("over");
+  const files = Array.from(e.dataTransfer.files).filter((f) => f.type.startsWith("image/"));
+  if (files.length) recognizeFiles(files);
+};
+fileInput.onchange = () => {
+  const files = Array.from(fileInput.files);
+  if (files.length) recognizeFiles(files);
+  fileInput.value = "";
+};
+function showPreview(f) {
+  const img = $("#preview");
+  img.src = URL.createObjectURL(f);
+  img.style.display = "block";
+  const fr = new FileReader();
+  fr.onload = () => {
+    lastImageDataUrl = fr.result;
+    $("#crop").style.display = "inline-block";
+  };
+  fr.readAsDataURL(f);
+}
+$("#preview").onclick = () => {
+  if ($("#preview").src) window.open($("#preview").src, "_blank");
+};
+
+/* ---------- manual crop: drag a box, recognise only that region ---------- */
+const cropModal = $("#crop-modal"), cropImg = $("#crop-img"), cropBox = $("#crop-box");
+let cropStart = null, cropRect = null;
+
+$("#crop").onclick = () => {
+  if (!lastImageDataUrl) return;
+  cropImg.src = lastImageDataUrl;
+  cropBox.style.display = "none";
+  cropRect = null;
+  cropModal.classList.add("on");
+};
+$("#crop-cancel").onclick = () => cropModal.classList.remove("on");
+
+function stagePoint(e) {
+  const r = cropImg.getBoundingClientRect();
+  return {
+    x: Math.min(Math.max(e.clientX - r.left, 0), r.width),
+    y: Math.min(Math.max(e.clientY - r.top, 0), r.height),
+  };
+}
+cropImg.addEventListener("pointerdown", (e) => {
+  e.preventDefault();
+  cropStart = stagePoint(e);
+  cropBox.style.display = "block";
+  cropBox.style.left = cropStart.x + "px";
+  cropBox.style.top = cropStart.y + "px";
+  cropBox.style.width = "0px";
+  cropBox.style.height = "0px";
+  cropImg.setPointerCapture(e.pointerId);
+});
+cropImg.addEventListener("pointermove", (e) => {
+  if (!cropStart) return;
+  const p = stagePoint(e);
+  const x = Math.min(cropStart.x, p.x), y = Math.min(cropStart.y, p.y);
+  const w = Math.abs(p.x - cropStart.x), h = Math.abs(p.y - cropStart.y);
+  cropBox.style.left = x + "px";
+  cropBox.style.top = y + "px";
+  cropBox.style.width = w + "px";
+  cropBox.style.height = h + "px";
+  cropRect = { x, y, w, h };
+});
+cropImg.addEventListener("pointerup", () => { cropStart = null; });
+
+$("#crop-go").onclick = () => {
+  if (!cropRect || cropRect.w < 8 || cropRect.h < 8) {
+    return status("先在图上拖出一个框", "err");
+  }
+  const rx = cropImg.naturalWidth / cropImg.clientWidth;
+  const ry = cropImg.naturalHeight / cropImg.clientHeight;
+  const sx = Math.round(cropRect.x * rx), sy = Math.round(cropRect.y * ry);
+  const sw = Math.round(cropRect.w * rx), sh = Math.round(cropRect.h * ry);
+  const up = Math.min(3, Math.max(2, Math.ceil(300 / Math.min(sw, sh))));
+  const canvas = document.createElement("canvas");
+  canvas.width = sw * up;
+  canvas.height = sh * up;
+  const ctx = canvas.getContext("2d");
+  ctx.imageSmoothingEnabled = true;
+  ctx.drawImage(cropImg, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+  canvas.toBlob((blob) => {
+    if (!blob) return status("裁剪失败", "err");
+    cropModal.classList.remove("on");
+    const f = new File([blob], "crop.png", { type: "image/png" });
+    showPreview(f);
+    recognizeFiles([f]);
+  }, "image/png");
+};
+
+const samples = $("#samples");
+for (const [name, smi] of Object.entries(SAMPLES)) {
+  const b = document.createElement("button");
+  b.textContent = name;
+  b.onclick = () => { $("#smiles").value = smi; analyzeSmiles(smi); };
+  samples.appendChild(b);
+}
+
+fetch("/api/health").then(r => r.json()).then(d => {
+  if (!d.recognizer) status("图片识别模块未就绪，当前可用 SMILES 解析。");
+  else if (!d.model_loaded) status("识别模型加载中，首次识别会稍慢…");
+});
+
+// Deep link: /?image=a.png,b.png  /?smiles=...  /?sample=咖啡因
+const params = new URLSearchParams(location.search);
+const deepImages = (params.get("image") || "").split(",").map((s) => s.trim()).filter(Boolean);
+const deepSmiles = params.get("smiles");
+const deepSample = params.get("sample");
+if (deepImages.length) {
+  Promise.all(deepImages.map((name) =>
+    fetch("/samples/" + encodeURIComponent(name))
+      .then((r) => r.blob())
+      .then((b) => new File([b], name, { type: b.type || "image/png" }))
+  ))
+    .then((files) => { showPreview(files[0]); recognizeFiles(files); })
+    .catch(() => status("示例图片加载失败", "err"));
+} else if (deepSmiles) {
+  $("#smiles").value = deepSmiles;
+  analyzeSmiles(deepSmiles);
+} else if (deepSample && SAMPLES[deepSample]) {
+  const smi = SAMPLES[deepSample];
+  $("#smiles").value = smi;
+  analyzeSmiles(smi);
+}
+</script>
+</body>
+</html>
