@@ -1,0 +1,99 @@
+{
+  "single_aspirin.png": {
+    "expect": [
+      "CC(=O)Oc1ccccc1C(=O)O"
+    ],
+    "strict": true,
+    "note": ""
+  },
+  "single_caffeine.png": {
+    "expect": [
+      "Cn1cnc2c1c(=O)n(C)c(=O)n2C"
+    ],
+    "strict": true,
+    "note": ""
+  },
+  "single_ibuprofen.png": {
+    "expect": [
+      "CC(C)Cc1ccc(cc1)C(C)C(=O)O"
+    ],
+    "strict": true,
+    "note": ""
+  },
+  "single_alanine.png": {
+    "expect": [
+      "C[C@@H](N)C(=O)O"
+    ],
+    "strict": true,
+    "note": ""
+  },
+  "single_glucose.png": {
+    "expect": [
+      "OC[C@H]1OC(O)[C@H](O)[C@@H](O)[C@@H]1O"
+    ],
+    "strict": true,
+    "note": ""
+  },
+  "single_caffeine_rot90.png": {
+    "expect": [
+      "Cn1cnc2c1c(=O)n(C)c(=O)n2C"
+    ],
+    "strict": true,
+    "note": "rotated 90 degrees"
+  },
+  "multi_2x2.png": {
+    "expect": [
+      "CC(=O)Oc1ccccc1C(=O)O",
+      "Cn1cnc2c1c(=O)n(C)c(=O)n2C"
+    ],
+    "strict": true,
+    "note": "two structures stacked"
+  },
+  "markush_oxadiazole.png": {
+    "expect": [
+      "*c1nnc(OCC)o1"
+    ],
+    "strict": true,
+    "note": "R-group wildcard, drawn with an R label"
+  },
+  "abbrev_ph.png": {
+    "expect": [
+      "CC(=O)Nc1ccc(-c2ccccc2)cc1"
+    ],
+    "strict": true,
+    "note": "Ph abbreviation for phenyl"
+  },
+  "abbrev_me.png": {
+    "expect": [
+      "CC(=O)Nc1ccc(C)cc1"
+    ],
+    "strict": true,
+    "note": "Me abbreviation for methyl"
+  },
+  "noise_text.png": {
+    "expect": [],
+    "strict": true,
+    "note": "prose only: expect no structures"
+  },
+  "noise_table.png": {
+    "expect": [],
+    "strict": true,
+    "note": "table rules only: expect no structures"
+  },
+  "scheme_3.png": {
+    "expect": [
+      "CC(=O)Oc1ccccc1C(=O)O",
+      "Cn1cnc2c1c(=O)n(C)c(=O)n2C",
+      "CC(C)Cc1ccc(cc1)C(C)C(=O)O"
+    ],
+    "strict": true,
+    "note": "synthetic reaction scheme with arrows"
+  },
+  "lowres_aspirin.png": {
+    "expect": [
+      "CC(=O)Oc1ccccc1C(=O)O"
+    ],
+    "strict": false,
+    "note": "blurry, soft case"
+  }
+}
