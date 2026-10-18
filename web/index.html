@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MolVision · 结构式识别工作台</title>
 <script src="/static/vendor/3Dmol-min.js"></script>
@@ -41,14 +42,14 @@
     max-width:1320px;margin:0 auto;
   }
   .brand{
-    font-family:var(--serif);font-size:15px;letter-spacing:.32em;text-transform:uppercase;
+    font-family:var(--serif);font-size:15px;letter-spacing:.32em;text-transform:none;
   }
   .brand::before{
     content:"";display:inline-block;width:7px;height:7px;margin-right:12px;
     background:var(--accent-2);transform:rotate(45deg) translateY(-1px);
   }
   .masthead-meta{
-    font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--faint);
+    font-size:10.5px;letter-spacing:.24em;text-transform:none;color:var(--faint);
   }
   @media(max-width:760px){
     .masthead{padding:18px 22px}
@@ -58,7 +59,7 @@
   /* ---------- hero ---------- */
   .hero{max-width:1320px;margin:0 auto;padding:48px 48px 34px}
   .kicker{
-    font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent-2);
+    font-size:10.5px;letter-spacing:.26em;text-transform:none;color:var(--accent-2);
     margin:0 0 26px;display:flex;align-items:center;gap:14px;
   }
   .kicker::after{content:"";flex:1;height:1px;background:var(--line);max-width:120px}
@@ -98,7 +99,7 @@
     font-family:var(--serif);font-size:19px;font-weight:400;margin:0;letter-spacing:.01em;
   }
   .panel-head .tag{
-    margin-left:auto;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+    margin-left:auto;font-size:10px;letter-spacing:.18em;text-transform:none;color:var(--faint);
   }
 
   @media(max-width:1200px){.panel-head .tag{display:none}}
@@ -117,7 +118,7 @@
 
   .or{
     display:flex;align-items:center;gap:14px;margin:22px 0 14px;
-    font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);
+    font-size:10px;letter-spacing:.22em;text-transform:none;color:var(--faint);
   }
   .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line-2)}
 
@@ -133,17 +134,17 @@
   button{font-family:var(--sans);cursor:pointer;transition:all .18s}
   .btn{
     background:var(--ink);color:var(--paper-2);border:1px solid var(--ink);
-    padding:10px 20px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    padding:10px 20px;font-size:11px;letter-spacing:.16em;text-transform:none;
   }
   .btn:hover{background:var(--accent);border-color:var(--accent)}
   .btn-ghost{
     background:transparent;color:var(--ink-2);border:1px solid var(--line);
-    padding:10px 18px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    padding:10px 18px;font-size:11px;letter-spacing:.16em;text-transform:none;
   }
   .btn-ghost:hover{border-color:var(--ink);color:var(--ink)}
 
   .options{display:flex;align-items:center;gap:8px;margin-top:16px}
-  .options label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+  .options label{font-size:10px;letter-spacing:.14em;text-transform:none;color:var(--faint)}
   .options select{
     background:#fff;border:1px solid var(--line);color:var(--ink);
     font-family:var(--mono);font-size:12px;padding:4px 8px;outline:none;
@@ -152,8 +153,8 @@
   .opt-hint{font-size:10px;color:var(--faint)}
 
   .samples{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:22px;           padding-top:16px;border-top:1px solid var(--line-2)}
-  .samples::before{content:"Examples";flex-basis:100%;font-size:10px;letter-spacing:.2em;
-                   text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+  .samples::before{content:"Examples";flex-basis:100%;font-size:10px;letter-spacing:.06em;
+                   text-transform:none;color:var(--faint);margin-bottom:4px}
   .samples button{
     background:none;border:0;padding:2px 0;color:var(--ink-2);font-size:12.5px;
     border-bottom:1px solid transparent;
@@ -172,7 +173,7 @@
   /* ---------- multi-structure selector ---------- */
   .multi{margin-bottom:24px;border:1px solid var(--line);background:var(--paper-2);padding:12px 14px}
   .multi-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:10px}
-  .multi-head .label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .multi-head .label{font-size:10px;letter-spacing:.18em;text-transform:none;color:var(--faint)}
   .multi-head .label b{color:var(--accent-2);font-weight:400;font-family:var(--serif);letter-spacing:0}
   .multi-actions{display:flex;gap:14px}
   .multi-list{display:flex;gap:10px;flex-wrap:wrap;padding-bottom:4px}
@@ -207,7 +208,7 @@
   .frame img{max-width:100%;max-height:100%;display:block;mix-blend-mode:multiply}
   .frame .ph{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-    font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+    font-size:10px;letter-spacing:.2em;text-transform:none;
     color:var(--faint);pointer-events:none;
   }
   #viewer3d{width:100%;height:100%;position:relative}
@@ -215,20 +216,20 @@
     margin-top:10px;font-size:11.5px;color:var(--ink-2);display:flex;gap:8px;align-items:baseline;
   }
   figcaption b{font-family:var(--serif);font-weight:400;color:var(--accent-2);letter-spacing:.02em;margin-right:2px}
-  figcaption span{margin-left:auto;color:var(--faint);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+  figcaption span{margin-left:auto;color:var(--faint);font-size:10px;letter-spacing:.14em;text-transform:none}
 
   /* ---------- smiles row ---------- */
   .smiles-row{
     margin-top:26px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
     display:flex;align-items:center;gap:16px;flex-wrap:wrap;
   }
-  .smiles-row .label{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+  .smiles-row .label{font-size:9.5px;letter-spacing:.06em;text-transform:none;color:var(--faint)}
   .smiles-row code{
     flex:1;min-width:220px;font-family:var(--mono);font-size:12.5px;color:var(--accent);
     word-break:break-all;
   }
   .link-btn{
-    background:none;border:0;padding:0;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    background:none;border:0;padding:0;font-size:11px;letter-spacing:.12em;text-transform:none;
     color:var(--ink-2);border-bottom:1px solid var(--line);
   }
   .link-btn:hover{color:var(--accent);border-bottom-color:var(--accent)}
@@ -249,13 +250,13 @@
     font-family:var(--serif);font-weight:400;font-size:16px;margin:0;
   }
   .table-title span{margin-left:auto;font-size:10px;letter-spacing:.16em;
-                    text-transform:uppercase;color:var(--faint)}
+                    text-transform:none;color:var(--faint)}
   .descriptors{
     display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));
     border-top:1px solid var(--line-2);
   }
   .prop{padding:13px 12px 14px;border-bottom:1px solid var(--line-2)}
-  .prop .k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .prop .k{font-size:9.5px;letter-spacing:.16em;text-transform:none;color:var(--faint)}
   .prop .v{font-family:var(--serif);font-size:20px;margin-top:3px;color:var(--ink);
            font-variant-numeric:tabular-nums;line-height:1.25}
   .prop .v.small{font-family:var(--mono);font-size:12px;color:var(--ink-2)}
@@ -284,7 +285,7 @@
   .crop-bar{display:flex;align-items:center;gap:12px;padding:11px 14px;
             border-top:1px solid var(--line)}
   .crop-hint{margin-right:auto;font-size:10px;letter-spacing:.16em;
-             text-transform:uppercase;color:var(--faint)}
+             text-transform:none;color:var(--faint)}
 
   /* ---------- overlay ---------- */
   #overlay{
@@ -292,7 +293,7 @@
     align-items:center;justify-content:center;z-index:60;backdrop-filter:blur(1.5px);
   }
   #overlay.on{display:flex}
-  .loader{text-align:center;color:var(--ink-2);font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .loader{text-align:center;color:var(--ink-2);font-size:11px;letter-spacing:.2em;text-transform:none}
   .spinner{
     width:34px;height:34px;border:2px solid var(--line);border-top-color:var(--accent);
     border-radius:50%;animation:spin .9s linear infinite;margin:0 auto 14px;
@@ -306,12 +307,12 @@
 <body>
 
 <header class="masthead">
-  <div class="brand">Molvision</div>
-  <div class="masthead-meta">Structure Intelligence · RDKit Pipeline</div>
+  <div class="brand">MolVision</div>
+  <div class="masthead-meta">Structure intelligence · RDKit pipeline</div>
 </header>
 
 <section class="hero">
-  <p class="kicker">Cheminformatics Workbench</p>
+  <p class="kicker">Cheminformatics workbench</p>
   <h1>From a drawing<br/><em>to a molecule.</em></h1>
   <p class="lede">
     上传论文、专利或教材里的结构式图片，识别为 SMILES；随后重绘二维结构、生成三维构象，
@@ -360,7 +361,7 @@
 
   <section>
     <div class="panel-head">
-      <span class="idx">02</span><h2>Result</h2><span class="tag">Depiction · Conformer · Descriptors</span>
+      <span class="idx">02</span><h2>Result</h2><span class="tag">Depiction · conformer · descriptors</span>
     </div>
 
     <div id="multi" class="multi" style="display:none">
@@ -396,7 +397,7 @@
     <div id="alerts" class="alerts"></div>
 
     <div class="table-title" style="display:none">
-      <h3>Table 1 — Molecular descriptors</h3>
+      <h3>Table 1 — molecular descriptors</h3>
       <span>Computed by RDKit</span>
     </div>
     <div id="props" class="descriptors" style="display:none"></div>
@@ -514,7 +515,7 @@ function render(r) {
     propCell("Formula", p.formula),
     propCell("Molecular weight", p.mw),
     propCell("Exact mass", p.exact_mass),
-    propCell("cLogP", p.logp),
+    propCell("CLogP", p.logp),
     propCell("TPSA", p.tpsa),
     propCell("HBD / HBA", p.hbd + " / " + p.hba),
     propCell("Rotatable bonds", p.rotatable_bonds),
