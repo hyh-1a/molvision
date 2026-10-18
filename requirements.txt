@@ -1,0 +1,4 @@
+rdkit>=2024.3
+decimer>=2.8
+opencv-python
+pymupdf>=1.24
